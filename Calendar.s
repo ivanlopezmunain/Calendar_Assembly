@@ -42,8 +42,8 @@ __start:
 	la $a0 espaciofecha1
 	move $s0 $a0
 	jal comprobadorBarras
-	jal getAno			#año calculado en $v0
-	move $s1 $v0			#movemos el año a $s1
+	jal getAno			#aÃ±o calculado en $v0
+	move $s1 $v0			#movemos el aÃ±o a $s1
 	jal ComprobarBisiesto		
 	jal getMes			#mes calculado en $v0
 	move $s2 $v0			#movemos a $s2 el MES CALCULADO
@@ -91,7 +91,7 @@ MALFORM:
 	syscall
 	li $v0 10 
 	syscall
-getAno:					#comprobar si año correcto 
+getAno:					#comprobar si aÃ±o correcto 
 	addi $t2 $s0 6
 	addi $t6 $zero 10
 	addi $t3 $zero 48
@@ -122,12 +122,12 @@ CalculoAno:
 	addi $t0 $t0 -48
 	add $v0 $v0 $t1
 	add $v0 $v0 $t2
-	add $v0 $v0 $t0			#en $v0 esta el año (CALCULADO)
+	add $v0 $v0 $t0			#en $v0 esta el aÃ±o (CALCULADO)
 	addi $t9 $zero 1583
 	slt $t8 $v0 $t9
 	bne $zero $t8 Juliano
 	jr $ra
-Juliano:				# si año menor que 1583: error calendario juliano
+Juliano:				# si aÃ±o menor que 1583: error calendario juliano
 	la $a0 entradaerror4
 	li $v0 4
 	syscall
@@ -141,7 +141,7 @@ MALCARAC:
 	li $v0 10 
 	syscall
 
-ComprobarBisiesto:				#si año bisiesto cargamos moduloBisiesto y sino moduloNormal (sirven para calcular el dia de la semana)
+ComprobarBisiesto:				#si aÃ±o bisiesto cargamos moduloBisiesto y sino moduloNormal (sirven para calcular el dia de la semana)
 	addi $t8 $zero 4
 	addi $t9 $zero 100
 	addi $t7 $zero 400
@@ -335,18 +335,18 @@ getFecha:				#obtenemos el dia de la semana que corresponde con la fecha
 	sll $t2 $s2 2
 	add $a2 $t2 $a2
 	lw $t2 0($a2)			#en $t2 tenemos el modulo
-	addi $t1 $s1 -1			#decrementamos en una unidad el año. en $t1 (año-1)
+	addi $t1 $s1 -1			#decrementamos en una unidad el aÃ±o. en $t1 (aÃ±o-1)
 	divu $t1 $t3
-	mfhi $t4			#en $t4 (año-1)%7
-	srl $t0 $t1 2			#(año-1)/4 en $t0
+	mfhi $t4			#en $t4 (aÃ±o-1)%7
+	srl $t0 $t1 2			#(aÃ±o-1)/4 en $t0
 	divu $t1 $t5
-	mflo $t5			# en $t5 (año-1)/100
+	mflo $t5			# en $t5 (aÃ±o-1)/100
 	addi $t5 $t5 1
 	mul $t5 $t5 $t6
-	srl $t5 $t5 2			#en $t5 (3*((año-1)/100+1)/4)
-	sub $t5 $t0 $t5			#(año-1)/4 - (3*((año-1)/100+1)/4)
+	srl $t5 $t5 2			#en $t5 (3*((aÃ±o-1)/100+1)/4)
+	sub $t5 $t0 $t5			#(aÃ±o-1)/4 - (3*((aÃ±o-1)/100+1)/4)
 	divu $t5 $t3
-	mfhi $t5 			# ((año-1)/4 - (3*((año-1)/100+1)/4))%7			
+	mfhi $t5 			# ((aÃ±o-1)/4 - (3*((aÃ±o-1)/100+1)/4))%7			
 	divu $s3 $t3
 	mfhi $t6			#en $t6 dia%7
 	add $t6 $t6 $t2			#en $t6 dia%7 + Modulo
@@ -429,7 +429,7 @@ Sabado:
 	li $v0 1
 	syscall
 	jr $ra
-ImprimirMes:				#imprimir el mes y el año
+ImprimirMes:				#imprimir el mes y el aÃ±o
 	addi $t0 $zero 1
 	beq $t0 $s2 Enero
 	addi $t0 $zero 2
